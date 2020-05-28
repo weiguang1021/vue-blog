@@ -1,57 +1,95 @@
 <template>
-  <el-container>
-    <el-aside>
-      <side-bar></side-bar>
-    </el-aside>
-    <el-container>
-      <el-header style="">
-        <nav-bar></nav-bar>
-      </el-header>
-      <el-main>
-        <app-main></app-main>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div class="main" :class="isClose">
+    <side-bar class="sidebar"></side-bar>
+    <div class="container">
+      <nav-bar></nav-bar>
+      <view-bar-horizon/>
+      <app-main></app-main>
+    </div>
+  </div>
 </template>
 
 <script>
-import AppMain from "./cComps/AppMain";
-import NavBar from "./cComps/NavBar";
-import SideBar from "./cComps/SideBar";
+import AppMain from "./cComps/AppMain/index";
+import NavBar from "./cComps/NavBar/index";
+import SideBar from "./cComps/SideBar/index";
+import ViewBarHorizon from "./cComps/ViewBarHorizon/index";
+
+import {mapState} from "vuex";
 
 export default {
   components: {
     AppMain,
     NavBar,
-    SideBar
-  }
+    SideBar,
+    ViewBarHorizon
+  },
+  computed:{
+    ...mapState({
+      isCollapse: state => state.isCollapse
+    }),
+    isClose() {
+      return { collapse: this.isCollapse };
+    },
+  },
+  methods:{}
 };
 </script>
 
 <style>
-.el-header,
-.el-footer {
-  background-color: #b3c0d1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+.sidebar {
+  width: 230px !important;
+  transition: width 0.24s ease-in;
+  /*background-color: #304654*/
+}
+.collapse>.sidebar{
+  width: 64px !important;
+  transition: width 0.24s ease-in;
 }
 
-.el-aside {
-  background-color: #d3dce6;
-  color: #333;
-  text-align: center;
-  line-height: 200px;
+.collapse>.container{
+  flex: 1;
+  transition: width 0.24s ease-in;
+}
+.a {
+  width: 100px;
+  /*transition: width 0.24s ease-in;*/
+  /*background-color: #304654*/
+}
+.container{
+  flex: 1;
+  background-color: #fef8ef;
+  transition: width 0.24s ease-in;
+}
+.main{
+  height: 100%;
+  display: flex;
 }
 
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 160px;
+.collapse .el-menu-item > span {
+  display: none;
 }
 
-body > .el-container {
-  margin-bottom: 40px;
+.collapse   .el-menu .el-submenu > .el-submenu__title > span {
+  display: none;
+}
+
+.collapse   .el-menu .el-submenu > ul {
+  display: none;
+}
+.collapse .logo>span{
+  display: none;
+}
+
+.collapse
+  .el-menu
+.el-submenu
+> .el-submenu__title
+> .el-submenu__icon-arrow {
+  display: none;
+}
+
+.el-icon-d-arrow-left.active {
+  transform: rotate(180deg);
 }
 </style>

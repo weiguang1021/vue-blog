@@ -1,0 +1,16 @@
+html,body, .el-header, .el-main{
+  padding: 0;
+  margin: 0;
+}
+html, body,.el-container,#app{
+  height: 100%;
+  overflow-y: hidden;
+}
+.el-menu {
+  border: none;
+  //transition: width 0.24s ease-in;
+}
+.el-menu--collapse{
+  //transition: width 0.24s ease-in;
+  width: 54px;
+}
